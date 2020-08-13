@@ -1,3 +1,6 @@
+# Svelte
+/public/build/
+
 # Logs
 logs
 *.log
