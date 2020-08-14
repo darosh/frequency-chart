@@ -1,5 +1,7 @@
 # Frequency Chart
 
+Live demo here: [darosh.github.io/frequency-chart](https://darosh.github.io/frequency-chart/)
+
 ![App preview](https://github.com/darosh/frequency-chart/raw/master/preview.svg "App preview")
 
 ## Resources
