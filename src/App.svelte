@@ -1,7 +1,6 @@
 <script>
 import { scaleLinear, scaleLog } from 'd3-scale'
 import { line, curveBasisOpen } from 'd3-shape'
-import { path } from 'd3-path'
 import { phons } from './phons'
 import { marks, regions, types, tags, values, octaves } from './data'
 
