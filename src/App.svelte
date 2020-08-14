@@ -45,10 +45,32 @@ function formatHz (v) {
 function roundHz (v) {
   return v.toFixed(2).replace(/0$/, '').replace(/0$/, '').replace(/\.$/, '')
 }
+
+function download (e) {
+  let svg = document.getElementById('frequency-chart')
+    .outerHTML
+    .replace(/style="transform: translate3d\(([\d\.]+)px, 0px, 0px\) scaleX\(([\d\.]+)\);"/g, 'transform="translate($1 0) scale($2 1)"')
+    .replace(/style="transform: translate3d\(([\d\.]+)px, 0px, 0px\);"/g, 'transform="translate($1 0)"')
+    .replace('<svg', '<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" version="1.1"')
+
+  e.preventDefault()
+
+  const element = document.createElement('a')
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(svg))
+  element.setAttribute('download', 'frequency-chart.svg')
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+
+  element.click()
+
+  document.body.removeChild(element)
+}
 </script>
 
 <main>
-  <svg width={w} height={h} on:click={switchScale} font-family="'Droid Sans', sans-serif" font-size="{fontSize}">
+  <svg id="frequency-chart" width={w} height={h} on:click={switchScale} font-family="'Droid Sans', sans-serif"
+       font-size="{fontSize}">
     {#each regions as region}
       <rect fill="{region.bg}"
             fill-opacity="0.5"
@@ -197,8 +219,14 @@ function roundHz (v) {
     </text>
   </svg>
 
-  <div style="text-align: end; width: {w}px; display: inline-block;">
-    Made in Brno 2020, <a href="https://github.com/darosh/frequency-chart">Github</a>
+  <div style="text-align: end; width: {w}px; display: inline-flex; margin-top: {fontBoxMargin * 2}px;">
+    <div>
+      <a href="#" on:click={switchScale}>Switch scale</a>,
+      <a href="#" on:click={download}>Download SVG</a>
+    </div>
+    <div style="flex: 1 0">
+      Made in Brno 2020, <a href="https://github.com/darosh/frequency-chart">Github</a>
+    </div>
   </div>
 </main>
 
